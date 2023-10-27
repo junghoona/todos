@@ -1,2 +1,2 @@
 # todos
-Fullstack web application for planning and monitoring user tasks 
+Minimalist Kanban board for planning and organizing personal goals/daily tasks
