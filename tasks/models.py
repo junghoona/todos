@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from goals.models import Goal
 
 
 class Status(models.Model):
@@ -19,6 +20,11 @@ class Task(models.Model):
     due_date = models.DateTimeField(null=True)
     status = models.ForeignKey(
         Status,
+        related_name="tasks",
+        on_delete=models.PROTECT,
+    )
+    goal = models.ForeignKey(
+        Goal,
         related_name="tasks",
         on_delete=models.PROTECT,
     )
