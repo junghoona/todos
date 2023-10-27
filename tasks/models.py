@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from goals.models import Goal
 
 
 class Status(models.Model):
@@ -22,21 +23,26 @@ class Task(models.Model):
         related_name="tasks",
         on_delete=models.PROTECT,
     )
+    goal = models.ForeignKey(
+        Goal,
+        related_name="tasks",
+        on_delete=models.PROTECT,
+    )
 
     @classmethod
     def create(cls, **kwargs):
-        kwargs["status"] = Status.objects.get(name="TO-DO")
+        kwargs["status"] = Status.objects.create(name="TO-DO")
         task = cls(**kwargs)
         task.save()
         return task
 
     def proceed(self):
-        status = Status.objects.get(name="IN PROGRESS")
+        status = Status.objects.create(name="IN PROGRESS")
         self.status = status
         self.save()
 
     def complete(self):
-        status = Status.objects.get(name="COMPLETED")
+        status = Status.objects.create(name="COMPLETED")
         self.status = status
         self.save()
 
