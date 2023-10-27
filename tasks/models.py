@@ -23,6 +23,23 @@ class Task(models.Model):
         on_delete=models.PROTECT,
     )
 
+    @classmethod
+    def create(cls, **kwargs):
+        kwargs["status"] = Status.objects.get(name="TO-DO")
+        task = cls(**kwargs)
+        task.save()
+        return task
+
+    def proceed(self):
+        status = Status.objects.get(name="IN PROGRESS")
+        self.status = status
+        self.save()
+
+    def complete(self):
+        status = Status.objects.get(name="COMPLETED")
+        self.status = status
+        self.save()
+
     def get_api_url(self):
         return reverse("api_show_task", kwargs={"id": self.id})
 
