@@ -1,4 +1,3 @@
-from tasks.models import Task
 from django.db import models
 from django.urls import reverse
 
