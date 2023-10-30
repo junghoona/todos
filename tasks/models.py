@@ -17,14 +17,14 @@ class Task(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
-    due_date = models.DateTimeField(null=True)
-    status = models.ForeignKey(
-        Status,
+    due_date = models.DateTimeField(blank=True, null=True)
+    goal = models.ForeignKey(
+        Goal,
         related_name="tasks",
         on_delete=models.PROTECT,
     )
-    goal = models.ForeignKey(
-        Goal,
+    status = models.ForeignKey(
+        Status,
         related_name="tasks",
         on_delete=models.PROTECT,
     )

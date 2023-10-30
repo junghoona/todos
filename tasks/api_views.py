@@ -1,6 +1,5 @@
 import json
 from .models import Task
-from goal.models import Goal
 from django.http import JsonResponse
 from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
@@ -33,7 +32,7 @@ class TaskDetailEncoder(ModelEncoder):
 
 
 @require_http_methods(["GET", "POST"])
-def api_lst_tasks(request, goal_id):
+def api_lst_tasks(request):
     if request.method == "GET":
         tasks = Task.objects.all()
         return JsonResponse(
@@ -42,21 +41,10 @@ def api_lst_tasks(request, goal_id):
         )
     else:
         content = json.loads(request.body)
-
-        if "goal" in content:
-            try:
-                goal = Goal.objects.get(id=goal_id)
-                content["goal"] = goal
-            except Goal.DoesNotExist:
-                return JsonResponse(
-                    {"message": "Invalid ID: Goal does not exist"},
-                    status=400
-                )
-
         task = Task.create(**content)
         return JsonResponse(
             task,
-            encoder=TaskListEncoder,
+            encoder=TaskDetailEncoder,
             safe=False
         )
 
