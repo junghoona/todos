@@ -1,2 +1,3 @@
-# todos
-Minimalist Kanban board for planning and organizing personal goals/daily tasks
+## Todos
+Minimalist personal kanban board for planning goals and maintaining, organizing, and tracking daily tasks
+
